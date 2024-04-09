@@ -148,6 +148,14 @@ public class StoveCounter : BaseCounter, IHasProgress
             if (player.HasKitchenObject())
             {
                 //У игрока есть предмет в руках
+                if (player.GetKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject))
+                {
+                    //У игрока в руках тарелка
+                    if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))
+                    {
+                        GetKitchenObject().DestroySelf();
+                    }
+                }
             }
             else
             {
