@@ -154,6 +154,19 @@ public class StoveCounter : BaseCounter, IHasProgress
                     if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))
                     {
                         GetKitchenObject().DestroySelf();
+
+                        state = State.Idle;
+                        fryingTimer = 0f;
+                        
+                        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs
+                        {
+                            progressNormalized = fryingTimer / fryingRecipeSO.fryingTimerMax
+                        });
+                        
+                        OnStateChange?.Invoke(this, new OnStateChangedEventArgs
+                        {
+                            state = state
+                        }); 
                     }
                 }
             }
