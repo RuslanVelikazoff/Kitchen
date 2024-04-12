@@ -32,18 +32,22 @@ public class DeliveryManager : MonoBehaviour
 
     private void Update()
     {
-        spawnRecipeTimer -= Time.deltaTime;
-        if (spawnRecipeTimer <= 0f)
+        if (KitchenGameManager.Instance.IsGamePlaying())
         {
-            spawnRecipeTimer = spawnRecipeTimerMax;
-
-            if (waitingRecipeSOList.Count < waitingRecipesMax)
+            spawnRecipeTimer -= Time.deltaTime;
+            if (spawnRecipeTimer <= 0f)
             {
-                RecipeSO waitingRecipeSO = recipeListSO.recipeSOList[Random.Range(0, recipeListSO.recipeSOList.Count)];
-                
-                waitingRecipeSOList.Add(waitingRecipeSO);
-                
-                OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
+                spawnRecipeTimer = spawnRecipeTimerMax;
+
+                if (waitingRecipeSOList.Count < waitingRecipesMax)
+                {
+                    RecipeSO waitingRecipeSO =
+                        recipeListSO.recipeSOList[Random.Range(0, recipeListSO.recipeSOList.Count)];
+
+                    waitingRecipeSOList.Add(waitingRecipeSO);
+
+                    OnRecipeSpawned?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
     }
