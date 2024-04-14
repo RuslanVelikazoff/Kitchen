@@ -21,6 +21,8 @@ public class StoveCounterSound : MonoBehaviour
     {
         bool playSound = e.state == StoveCounter.State.Frying || e.state == StoveCounter.State.Fried;
 
+        audioSource.volume = SoundManager.Instance.GetVolume();
+
         if (playSound)
         {
             audioSource.Play();
