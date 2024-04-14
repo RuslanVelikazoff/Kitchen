@@ -62,6 +62,7 @@ public class KitchenGameManager : MonoBehaviour
                 break;
             
             case State.GameOver:
+                OnStateChanged?.Invoke(this, EventArgs.Empty);
                 break;
         }
         Debug.Log(state);
@@ -89,6 +90,13 @@ public class KitchenGameManager : MonoBehaviour
 
     public float GetGamePlayingTimerNormalized()
     {
-        return 1 - (gamePlayingTimer / gamePlayingTimerMax);
+        if (state == State.GamePlaying || state == State.GameOver)
+        {
+            return 1 - (gamePlayingTimer / gamePlayingTimerMax);
+        }
+        else
+        {
+            return 0f;
+        }
     }
 }
